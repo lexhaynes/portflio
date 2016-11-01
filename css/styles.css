@@ -1,0 +1,241 @@
+/* ======== overrides  ======== */
+html {
+  font-size: 24px;
+}
+
+html, body {
+	margin: 0;
+	padding: 0;
+	height:100%;
+	font-family: 'Lato', sans-serif;
+	font-weight:300;
+	color:#000;
+	letter-spacing:0.65px;
+}
+
+a, a:visited {
+	text-decoration: none;
+	color:#000;
+	border-bottom:solid #000 3px;
+	padding-bottom:4px;
+}
+a:hover {
+	color:#ff0000;
+	border-bottom:solid #ff0000 3px;
+
+}
+
+/*a:hover:after {
+	content: "";
+	display: inline-block;
+	width:100%;
+	border-bottom:solid #ff0000 3px;
+	padding-bottom:0.25rem;
+}*/
+
+p , .section-content{
+	font-size:1rem;
+	font-family:'Abhaya Libre', serif;;
+}
+
+
+/* ======== global  ======== */
+
+.section {
+	display: flex;
+	justify-content: center;
+	margin:200px 0;
+}
+
+.content {
+	width:80%;
+	display: flex;
+	justify-content: space-between;
+}
+
+.section-title:before {
+	content: "";
+	display: block;
+	border-top:solid black 6px;
+	width:94%;
+	padding-top:1.5rem;
+}
+.section-title {
+	width:26%;
+	font-weight:900;
+	font-size:2rem;
+	letter-spacing:3px;
+
+}
+
+.section-content {
+	width:65%;
+	line-height:1.5rem;
+}
+
+/* ======== typography  ======== */
+
+
+.extra-bold {
+	font-weight:700;
+}
+
+.text-emphasize {
+	font-weight:600;
+	font-size:1.25rem;
+}
+
+/* ======== intro  ======== */
+
+.section.mod-intro {
+	margin-top:1rem;
+}
+
+.content.mod-intro {
+	display: block;
+}
+
+.intro-title {
+	font-weight:300;
+	text-transform: uppercase;
+	font-size:3rem;
+	text-align:center;
+}
+
+.intro-img, .intro-subtitle, .main-nav, .intro-arrow {
+	display: flex;
+	justify-content: center;
+	margin:2rem 0;
+}
+
+.intro-img {
+
+}
+
+.intro-subtitle {
+
+}
+
+.main-nav {
+
+}
+
+	.main-nav-item {
+		padding:0 1rem;
+		border-bottom:none;
+	}
+	.main-nav-item:hover {
+		padding:0 1rem;
+		border-bottom:none;
+	}
+
+.intro-arrow {
+	font-size:2rem;
+	margin-top:4rem;
+	cursor: pointer;
+}
+.intro-arrow:hover {
+	color:#ff0000;
+}
+
+
+
+/* ======== about  ======== */
+
+.section.mod-about {
+
+}
+
+.about-banner {
+	width:100%;
+	height:500px;
+	background: url(../img/spiral-eye.jpg) no-repeat center center;
+	background-attachment: fixed;
+    background-size:cover;
+	color:#fff;
+	font-weight:700;
+	font-size:2rem;
+	display: flex;
+	align-items:center;
+	justify-content:center;
+
+}
+
+/* ======== work  ======== */
+
+
+.work-grid {
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+.grid-item {
+	height:200px;
+	background:url(http://placehold.it/200x200) center center no-repeat;
+	background-size:cover;
+	border-radius:2px;
+	flex-basis: 33%;
+    max-width: 33%;
+	margin-bottom:20px;
+	cursor: pointer;
+}
+
+.grid-item.bigger {
+    flex-basis: 100%;
+    max-width:63%;
+}
+
+
+.grid-item:hover {
+	background:#666;
+}
+
+.grid-item.contracted {
+	max-width:23%;
+	/*align-self: center;*/
+}
+.grid-item.expanded {
+	max-width:73%;
+	flex-basis:100%;
+	/*height:250px;*/
+	transition: max-width 0.75s ease-in-out;
+
+}
+
+
+/* ======== contact  ======== */
+
+.section.mod-contact {
+
+}
+
+/* ======== footer  ======== */
+
+
+.footer {
+	height:60px;
+	background:#000;
+	color:#fff;
+	display: flex;
+	justify-content: center;
+	align-items:center;
+	font-size:0.75rem;
+	font-weight:300;
+}
+
+.social {
+
+}
+
+a.social-icon {
+	color:#fff;
+	padding:0 0.5rem;
+	border-bottom:none;
+
+}
+
+.social-icon:hover {
+	color:#ff0000;
+	border-bottom:none;
+}
