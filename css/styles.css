@@ -25,26 +25,25 @@ a:hover {
 
 }
 
-/*a:hover:after {
-	content: "";
-	display: inline-block;
-	width:100%;
-	border-bottom:solid #ff0000 3px;
-	padding-bottom:0.25rem;
-}*/
 
 p , .section-content{
 	font-size:1rem;
-	font-family:'Abhaya Libre', serif;;
+	font-family:'Abhaya Libre', serif;
 }
 
+p {
+	margin-top:0;
+}
 
 /* ======== global  ======== */
 
 .section {
 	display: flex;
 	justify-content: center;
-	margin:200px 0;
+	padding:150px 0;
+	z-index:1;
+	position: relative;
+	background: #fff;
 }
 
 .content {
@@ -57,21 +56,22 @@ p , .section-content{
 	content: "";
 	display: block;
 	border-top:solid black 6px;
-	width:94%;
+	width:88%;
 	padding-top:1.5rem;
 }
 .section-title {
-	width:26%;
+	width:20%;
 	font-weight:900;
-	font-size:2rem;
+	font-size:1.35rem;
 	letter-spacing:3px;
 
 }
 
 .section-content {
-	width:65%;
+	width:75%;
 	line-height:1.5rem;
 }
+
 
 /* ======== typography  ======== */
 
@@ -88,7 +88,6 @@ p , .section-content{
 /* ======== intro  ======== */
 
 .section.mod-intro {
-	margin-top:1rem;
 }
 
 .content.mod-intro {
@@ -138,6 +137,43 @@ p , .section-content{
 	color:#ff0000;
 }
 
+/* ======== fixed banner  ======== */
+
+
+/*to accommodate for reduced space when banner becomes fixed when it is at top of view port*/
+.section.mod-fixed-banner {
+	padding-top:0;
+	height:500px;
+}
+
+#about-banner  {
+	background-image: url(../img/spiral-eye.jpg);
+}
+#contact-banner  {
+	background-image: url(../img/spiral-eye.jpg);
+}
+
+.fixed-banner {
+	width:100%;
+	height:600px;
+	background-attachment: fixed;
+    background-size:cover;
+    background-repeat:no-repeat;
+    background-position: center center;
+	color:#fff;
+	font-weight:700;
+	font-size:2rem;
+	display: flex;
+	align-items:center;
+	justify-content:center;
+	border: solid green 2px;
+}
+
+.fixed-top {
+	top:0;
+	position: fixed;
+	z-index:0;
+}
 
 
 /* ======== about  ======== */
@@ -146,23 +182,10 @@ p , .section-content{
 
 }
 
-.about-banner {
-	width:100%;
-	height:500px;
-	background: url(../img/spiral-eye.jpg) no-repeat center center;
-	background-attachment: fixed;
-    background-size:cover;
-	color:#fff;
-	font-weight:700;
-	font-size:2rem;
-	display: flex;
-	align-items:center;
-	justify-content:center;
-
-}
 
 /* ======== work  ======== */
-
+.section.mod-work {
+}
 
 .work-grid {
 	display: flex;
@@ -175,39 +198,46 @@ p , .section-content{
 	background:url(http://placehold.it/200x200) center center no-repeat;
 	background-size:cover;
 	border-radius:2px;
-	flex-basis: 33%;
-    max-width: 33%;
+	flex-basis: 100%;
+    max-width: 43%;
 	margin-bottom:20px;
 	cursor: pointer;
+	font-size:1rem;
 }
 
 .grid-item.bigger {
     flex-basis: 100%;
-    max-width:63%;
-}
-
-
-.grid-item:hover {
-	background:#666;
+    max-width:53%;
 }
 
 .grid-item.contracted {
-	max-width:23%;
-	/*align-self: center;*/
+	max-width:33%;
+	transition: max-width 0.5s ease-in-out;
+	font-size:0.75rem;
 }
 .grid-item.expanded {
-	max-width:73%;
+	max-width:63%;
 	flex-basis:100%;
-	/*height:250px;*/
-	transition: max-width 0.75s ease-in-out;
+	transition: max-width 0.5s ease-in-out;
+	background:#666;
 
+}
+
+.grid-item-content {
+	/*display: flex;
+	justify-content: center;
+	align-items:center;*/
+	color:#fff;
+	font-family: 'Lato', sans-serif;
+	font-weight:500;
+	padding:1rem 0 1rem 1rem;
 }
 
 
 /* ======== contact  ======== */
 
 .section.mod-contact {
-
+	/*padding-bottom:400px;*/
 }
 
 /* ======== footer  ======== */
