@@ -11,6 +11,7 @@ html, body {
 	font-weight:300;
 	color:#000;
 	letter-spacing:0.65px;
+	height:100%;
 }
 
 a, a:visited {
@@ -41,7 +42,6 @@ p {
 	display: flex;
 	justify-content: center;
 	padding:150px 0;
-	z-index:1;
 	position: relative;
 	background: #fff;
 }
@@ -88,10 +88,16 @@ p {
 /* ======== intro  ======== */
 
 .section.mod-intro {
+	min-height:600px;
+	height:100%;
+	padding:0;
+	flex-direction:column;
+	justify-content: space-between;
 }
 
 .content.mod-intro {
 	display: block;
+	width:100%;
 }
 
 .intro-title {
@@ -99,38 +105,70 @@ p {
 	text-transform: uppercase;
 	font-size:3rem;
 	text-align:center;
+	margin-bottom:0;
 }
 
-.intro-img, .intro-subtitle, .main-nav, .intro-arrow {
+.intro-img, .intro-subtitle, .intro-arrow {
 	display: flex;
 	justify-content: center;
-	margin:2rem 0;
+	margin:1.5rem 0;
 }
 
 .intro-img {
-
+	background: url(../img/me-berlin.jpg) no-repeat center center;
+	width:120px;
+	height:120px;
+	background-size: cover;
+	border-radius:50%;
+	margin:0 auto;
 }
 
 .intro-subtitle {
-
+	font-weight: 500;
 }
 
 .main-nav {
-
+	background: #000;
+	font-size:0.65rem;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+    height:50px;
+    width:100%;
+    z-index:2;
 }
+	.main-nav-inner {
+		width:80%;
+	}
+
+	.main-nav.fixed-top {
+		justify-content: space-around;
+		background-color:rgba(0,0,0,0.75);
+	}
+
 
 	.main-nav-item {
-		padding:0 1rem;
+		padding:0 0.5rem;
 		border-bottom:none;
 	}
+	a.main-nav-item {
+		color:#fff;
+	}
 	.main-nav-item:hover {
-		padding:0 1rem;
+		color:#ff0000;
 		border-bottom:none;
+	}
+
+	.main-nav-item.logo {
+		display:none;
+	}
+	.main-nav-item.logo.is-visible {
+		display:inline-block;
 	}
 
 .intro-arrow {
 	font-size:2rem;
-	margin-top:4rem;
+	margin-top:2rem;
 	cursor: pointer;
 }
 .intro-arrow:hover {
@@ -144,6 +182,8 @@ p {
 .section.mod-fixed-banner {
 	padding-top:0;
 	height:500px;
+	z-index:0;
+	flex-direction: column;
 }
 
 #about-banner  {
@@ -166,13 +206,19 @@ p {
 	display: flex;
 	align-items:center;
 	justify-content:center;
-	border: solid green 2px;
 }
+
+.fixed-banner-overlay {
+	background:#000;
+	height:600px;
+	z-index:3;
+}
+
 
 .fixed-top {
 	top:0;
 	position: fixed;
-	z-index:0;
+	z-index:1;
 }
 
 
