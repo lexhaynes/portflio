@@ -12,12 +12,15 @@ var state = {
 	mobile_breakpoint: 800,
 	screen_size: document.documentElement.clientWidth,
 	scrollY: window.scrollY,
-	nav_top: 590,
-	banner1_top: 590,
-	banner2_top: {
-		desktop: 2580,
-		mobile: 3636
-	}
+	is_mobile: false
+}
+
+var positions = {
+	nav_top: 646,
+	banners: [
+		{node: nodes.about, desktop: 646, mobile: 646},
+		{node: nodes.contact, desktop: 2700, mobile: 3636}
+	]
 }
 
 console.log('initial state.screen_size: ' + state.screen_size);
@@ -25,9 +28,20 @@ console.log('mobile breakpoint: ' + state.mobile_breakpoint);
 
 
 //here, subscribe to state.screen_size and if it changes, run this function
-if (state.screen_size > state.mobile_breakpoint) {
-	console.log('yes');
-	addGridEventListeners();
+updateMobileState();
+
+function updateMobileState() {
+	if (isMobile()) {
+		state.is_mobile = true;
+		removeGridEventListeners();
+	} else {
+		state.is_mobile = false;
+		addGridEventListeners();
+	}
+}
+
+function isMobile() {
+	return state.screen_size > state.mobile_breakpoint ? false : true;
 }
 
 function addGridEventListeners() {
@@ -58,8 +72,6 @@ function toggleDivAndNearest(div, index) {
 }
 
 
-
-
 function isBannerTop(el, scrollY) {
 	var top = false;
 	var rectTop = Math.floor(el.getBoundingClientRect().top);
@@ -69,28 +81,45 @@ function isBannerTop(el, scrollY) {
 	return top;
 }
 
-function addRemoveFixedClass(el, scrollY) {
-	console.log(el);
-	var containerHeight = el.div.parentElement.clientHeight;
-	var bannerGone = el.appears+containerHeight;
 
-	if (scrollY > el.appears) {
-		el.div.classList.add('fixed-top');
+function addBannerEffects(banners) {
+	var screen = state.is_mobile ? 'mobile' : 'desktop';
+
+	banners.map(function(key, index) {
+		var banner 			= positions.banners[index];
+		var containerHeight = banner.node.parentElement.clientHeight;
+		var bannerGone 		= banner.node[screen]+containerHeight;
+		var opacity			= Math.abs( (nodes.scrollY-banner[screen])/500 )
+
+		if (nodes.scrollY > banner[screen]) {
+			banner.node.classList.add('fixed-top');
+			banner.node.previousElementSibling.classList.add('fixed-top', 'opacity-transition');		
+			banner.node.previousElementSibling.style.opacity = opacity;	
+		}
+
+		if (nodes.scrollY > bannerGone || nodes.scrollY < banner[screen] ) {
+			banner.node.classList.remove('fixed-top');
+			banner.node.previousElementSibling.classList.remove('fixed-top');		
+			banner.node.previousElementSibling.style.opacity = 0;	
+		}	
+	});
+}
+
+function addNavEffects(nav) {
+	if (nodes.scrollY > positions.nav_top) {
+	nodes.nav.classList.add('fixed-top');
+	nodes.nav.children[0].classList.add('is-visible');
+
+	} else {
+		nodes.nav.classList.remove('fixed-top');
+		nodes.nav.children[0].classList.remove('is-visible');
 	}
-	if (scrollY > bannerGone || scrollY < el.appears ) {
-		el.div.classList.remove('fixed-top');
-	}	
-	
 }
 
 window.addEventListener('resize', function() {
 	state.screen_size = document.documentElement.clientWidth;
 	console.log('resized state.screen_size: ' + state.screen_size);
-	if (state.screen_size > state.mobile_breakpoint) {
-		removeGridEventListeners();
-	} else {
-		addGridEventListeners();
-	}
+	updateMobileState();
 })
 
 window.addEventListener('scroll', function() {
@@ -99,48 +128,8 @@ window.addEventListener('scroll', function() {
 	nodes.scrollY = this.scrollY;
 	console.log('scrollY: ' + nodes.scrollY);
 
-	if (nodes.scrollY > state.nav_top) {
-		nodes.nav.classList.add('fixed-top');
-		nodes.nav.children[0].classList.add('is-visible');
+	addNavEffects(nodes.nav);
 
-	} else {
-		nodes.nav.classList.remove('fixed-top');
-		nodes.nav.children[0].classList.remove('is-visible');
-	}
-
-	//check if the screen size is small and then set banner 2 top
-	var banner2Top = state.screen_size > state.mobile_breakpoint ? state.banner2_top.desktop : state.banner2_top.mobile;
-	
-	var container1Height = nodes.about.parentElement.clientHeight;
-	var banner1Gone = state.banner1_top+container1Height;
-
-	var container2Height = nodes.contact.parentElement.clientHeight;
-	var banner2Gone = banner2Top+container2Height;
-
-
-	if (nodes.scrollY > state.banner1_top) {
-		nodes.about.classList.add('fixed-top');
-		nodes.about.previousElementSibling.classList.add('fixed-top');		
-		nodes.about.previousElementSibling.classList.add('opacity-transition');	
-		nodes.about.previousElementSibling.style.opacity = this.scrollY/1500;	
-			
-	}
-	if (nodes.scrollY > banner1Gone || nodes.scrollY < state.banner1_top ) {
-		nodes.about.classList.remove('fixed-top');
-		nodes.about.previousElementSibling.classList.remove('fixed-top');		
-		nodes.about.previousElementSibling.style.opacity = 0;	
-	}	
-
-	if (nodes.scrollY > banner2Top) {
-		nodes.contact.classList.add('fixed-top');
-		nodes.contact.previousElementSibling.classList.add('fixed-top');		
-		nodes.contact.previousElementSibling.classList.add('opacity-transition');	
-		nodes.contact.previousElementSibling.style.opacity = this.scrollY/3500;
-	}
-	if (nodes.scrollY > banner2Gone || nodes.scrollY < banner2Top ) {
-		nodes.contact.classList.remove('fixed-top');
-		nodes.contact.previousElementSibling.classList.remove('fixed-top');		
-		nodes.contact.previousElementSibling.style.opacity = 0;	
-	}	 	
-})
+	addBannerEffects([nodes.about, nodes.contact]);	
+});
 
