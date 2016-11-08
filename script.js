@@ -12,10 +12,10 @@ var state = {
 	mobile_breakpoint: 800,
 	screen_size: document.documentElement.clientWidth,
 	scrollY: window.scrollY,
-	nav_top: 606,
-	banner1_top: 606,
+	nav_top: 590,
+	banner1_top: 590,
 	banner2_top: {
-		desktop: 2690,
+		desktop: 2580,
 		mobile: 3636
 	}
 }
@@ -109,7 +109,7 @@ window.addEventListener('scroll', function() {
 	}
 
 	//check if the screen size is small and then set banner 2 top
-	var banner2Top = state.screen_size > state.mobile_breakpoint ? state.banner2_top : state.banner2_top.mobile;
+	var banner2Top = state.screen_size > state.mobile_breakpoint ? state.banner2_top.desktop : state.banner2_top.mobile;
 	
 	var container1Height = nodes.about.parentElement.clientHeight;
 	var banner1Gone = state.banner1_top+container1Height;
@@ -117,30 +117,30 @@ window.addEventListener('scroll', function() {
 	var container2Height = nodes.contact.parentElement.clientHeight;
 	var banner2Gone = banner2Top+container2Height;
 
-	var banner1Bg = window.getComputedStyle(nodes.about, null)["background"];
-			console.log(banner1Bg);
-
 
 	if (nodes.scrollY > state.banner1_top) {
 		nodes.about.classList.add('fixed-top');
-		
+		nodes.about.previousElementSibling.classList.add('fixed-top');		
+		nodes.about.previousElementSibling.classList.add('opacity-transition');	
+		nodes.about.previousElementSibling.style.opacity = this.scrollY/1500;	
+			
 	}
 	if (nodes.scrollY > banner1Gone || nodes.scrollY < state.banner1_top ) {
 		nodes.about.classList.remove('fixed-top');
+		nodes.about.previousElementSibling.classList.remove('fixed-top');		
+		nodes.about.previousElementSibling.style.opacity = 0;	
 	}	
-
 
 	if (nodes.scrollY > banner2Top) {
 		nodes.contact.classList.add('fixed-top');
+		nodes.contact.previousElementSibling.classList.add('fixed-top');		
+		nodes.contact.previousElementSibling.classList.add('opacity-transition');	
+		nodes.contact.previousElementSibling.style.opacity = this.scrollY/3500;
 	}
 	if (nodes.scrollY > banner2Gone || nodes.scrollY < banner2Top ) {
 		nodes.contact.classList.remove('fixed-top');
-	}
-
-	
-
-	
-	
-	 	
+		nodes.contact.previousElementSibling.classList.remove('fixed-top');		
+		nodes.contact.previousElementSibling.style.opacity = 0;	
+	}	 	
 })
 
