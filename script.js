@@ -32,156 +32,149 @@ console.log('initial state.screen_size: ' + state.screen_size);
 console.log('mobile breakpoint: ' + state.mobile_breakpoint);
 
 
-//here, subscribe to state.screen_size and if it changes, run this function
-updateMobileState();
 
-function updateMobileState() {
-	if (isMobile()) {
-		state.is_mobile = true;
-		removeGridEventListeners();
-	} else {
-		state.is_mobile = false;
-		addGridEventListeners();
+var observers = {
+	updateMobileState: function() {
+		state.is_mobile = utils.isMobile();
+
+		if (state.is_mobile) {
+			grid.removeEventListeners()
+		} else grid.addEventListeners();
+	},
+}
+
+
+var utils = (function() {
+	return {
+		isMobile: function() {
+			return state.screen_size > state.mobile_breakpoint ? false : true;
+		},
+
+		isScrollingUp: function () {
+			return state.previousScrollY > state.scrollY ? true : false
+		},
+
+		addClass: function(el, className) {
+			if (!el.classList.contains(className)) {
+				el.classList.add(className)
+			}
+		},
+
+		removeClass: function(el, className) {
+			if (el.classList.contains(className)) {
+				el.classList.remove(className)
+			}
+		},
+
+		addClasses: function(args) {
+			args.map(function(key, index) {
+				utils.addClass(key[0], key[1]);
+			})
+		},
+
+		removeClasses: function(args) {
+			args.map(function(key, index) {
+				utils.removeClass(key[0], key[1]);
+			})
+		},
 	}
-}
+})();
 
-function isMobile() {
-	return state.screen_size > state.mobile_breakpoint ? false : true;
-}
+var grid = (function() { 
+	return {
 
-function addGridEventListeners() {
-	Object.keys(nodes.grid_items).map(function(key, index) {
-		nodes.grid_items[key].addEventListener('mouseenter', function() { 
-			console.log('enter ', index);
-			toggleDivAndNearest(this, index), false });	
-		nodes.grid_items[key].addEventListener('mouseleave', function() { toggleDivAndNearest(this, index), false });
-	});
-}
+		addEventListeners: function() {
+			Object.keys(nodes.grid_items).map(function(key, index) {
+				nodes.grid_items[key].addEventListener('mouseenter', function() { 
+					console.log('enter ', index);
+					grid.toggleDivAndNearest(this, index), false });	
+				nodes.grid_items[key].addEventListener('mouseleave', function() { grid.toggleDivAndNearest(this, index), false });
+			});
+		},
+		
+		removeEventListeners: function() {
+			Object.keys(nodes.grid_items).map(function(key, index) {
+				nodes.grid_items[key].removeEventListener('mouseenter', false);	
+				nodes.grid_items[key].removeEventListener('mouseleave', false);
+			});
+		},
 
-function removeGridEventListeners() {
-	Object.keys(nodes.grid_items).map(function(key, index) {
-		nodes.grid_items[key].removeEventListener('mouseenter', false);	
-		nodes.grid_items[key].removeEventListener('mouseleave', false);
-	});
-}
+		toggleDivAndNearest: function(div, index) {
+			div.classList.toggle('expanded');
 
-
-function toggleDivAndNearest(div, index) {
-	div.classList.toggle('expanded');
-
-	if (index % 2 ==0 ) {
-		div.nextElementSibling.classList.toggle('contracted');
-	} else {
-		div.previousElementSibling.classList.toggle('contracted');
+			if (index % 2 ==0 ) {
+				div.nextElementSibling.classList.toggle('contracted');
+			} else {
+				div.previousElementSibling.classList.toggle('contracted');
+			}
+		},
 	}
+})();
+
+var effects = {
+	addBannerEffects: function(banners, scrollY) {
+		var screen = state.is_mobile ? 'mobile' : 'desktop';
+
+		banners.map(function(key, index) {
+			var banner 			= positions.banners[index];
+			var containerHeight = banner.node.parentElement.clientHeight;
+			var bannerGone 		= banner.node[screen]+containerHeight;
+			var opacity			= Math.abs( (state.scrollY-banner[screen])/1000 )
+
+			if (scrollY > banner[screen]) {
+				banner.node.previousElementSibling.style.opacity = opacity;
+				utils.addClasses([
+					[banner.node, 'fixed-top'],
+					[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
+				]);	
+			}
+
+			if (scrollY > bannerGone || scrollY < banner[screen] ) {
+				utils.removeClasses([
+					[banner.node, 'fixed-top'],
+					[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
+				]);			
+				banner.node.previousElementSibling.style.opacity = 0;	
+			}	
+		});
+	},
 }
-
-
-function isBannerTop(el, scrollY) {
-	var top = false;
-	var rectTop = Math.floor(el.getBoundingClientRect().top);
-	if (rectTop > -1 && rectTop < 1) {
-		top = true;
-	}
-	return top;
-}
-
-
-function addBannerEffects(banners) {
-	var screen = state.is_mobile ? 'mobile' : 'desktop';
-
-	banners.map(function(key, index) {
-		var banner 			= positions.banners[index];
-		var containerHeight = banner.node.parentElement.clientHeight;
-		var bannerGone 		= banner.node[screen]+containerHeight;
-		var opacity			= Math.abs( (state.scrollY-banner[screen])/1000 )
-
-		if (state.scrollY > banner[screen]) {
-			banner.node.previousElementSibling.style.opacity = opacity;
-			addClasses([
-				[banner.node, 'fixed-top'],
-				[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
-			]);	
-		}
-
-		if (state.scrollY > bannerGone || state.scrollY < banner[screen] ) {
-			removeClasses([
-				[banner.node, 'fixed-top'],
-				[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
-			]);			
-			banner.node.previousElementSibling.style.opacity = 0;	
-		}	
-	});
-}
-
-
-function addClass(el, className) {
-	if (!el.classList.contains(className)) {
-		el.classList.add(className)
-	}
-}
-function removeClass(el, className) {
-	if (el.classList.contains(className)) {
-		el.classList.remove(className)
-	}
-}
-
-function addClasses(args) {
-	args.map(function(key, index) {
-		addClass(key[0], key[1]);
-	})
-}
-
-function removeClasses(args) {
-	args.map(function(key, index) {
-		removeClass(key[0], key[1]);
-	})
-}
-
-function isScrollingUp() {
-	return state.previousScrollY > state.scrollY ? true : false
-}
-
-function handleUpScroll() {
-	removeClass(nodes.nav, 'slide-out');
-	addClasses([ 
-		[nodes.nav, 'fixed-top'],
-		[nodes.nav.children[0], 'is-visible'],
-	])
-}
-
-
-function handleDownScroll() {
-	removeClasses([ 
-		[nodes.nav, 'fixed-top'],
-		[nodes.nav.children[0], 'is-visible'],
-	])
-	addClass(nodes.nav, 'slide-out');
-}
+ 
 
 var handlers = {
+	upScroll: function() {
+		utils.removeClass(nodes.nav, 'slide-out');
+	},	
+
+	downScroll: function() {
+		utils.addClass(nodes.nav, 'slide-out');
+	}
+}
+
+
+var listeners = {
 	scroll: function() {
 		//console.log(this.scrollY);
 
 		state.previousScrollY = state.scrollY;
 		state.scrollY = this.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 
-		addBannerEffects([nodes.about, nodes.contact]);	
+		effects.addBannerEffects([nodes.about, nodes.contact], state.scrollY);	
 
 		//if we are past the intro page area
 		if (state.scrollY > positions.banners[0].desktop) {
 			//if upscrolling
-			if (isScrollingUp()) {
-				handleUpScroll();
+			if (utils.isScrollingUp()) {
+				handlers.upScroll();
 			} 
 		
 			else {
-				handleDownScroll();
+				handlers.downScroll();
 			}
 		} 
 		//if we have scrolled up to the intro area
 		else {
-			removeClasses([ 
+			utils.removeClasses([ 
 				[nodes.nav, 'fixed-top'],
 				[nodes.nav.children[0], 'is-visible'],
 			])
@@ -192,12 +185,16 @@ var handlers = {
 	resize: function() {
 		state.screen_size = document.documentElement.clientWidth;
 		console.log('resized state.screen_size: ' + state.screen_size);
-		updateMobileState();
+		observers.updateMobileState();
 	}
 }
 
-window.addEventListener('resize', handlers.resize, false);
+//INIT
 
-window.addEventListener('scroll', handlers.scroll, false);
+observers.updateMobileState();
+
+window.addEventListener('resize', listeners.resize, false);
+
+window.addEventListener('scroll', listeners.scroll, false);
 
 
