@@ -12,15 +12,20 @@ var state = {
 	mobile_breakpoint: 800,
 	screen_size: document.documentElement.clientWidth,
 	scrollY: window.scrollY,
+	previousScrollY: 0,
 	is_mobile: false
 }
 
 var positions = {
-	nav_top: 646,
+	nav_top: 620,
 	banners: [
-		{node: nodes.about, desktop: 646, mobile: 646},
-		{node: nodes.contact, desktop: 2700, mobile: 3636}
+		{node: nodes.about, desktop: 660, mobile: 660},
+		{node: nodes.contact, desktop: 2642, mobile: 3636}
 	]
+}
+
+var els = {
+	bannerHeight: window.getComputedStyle(document.getElementById('about-banner')).height.replace(/\D/g,'')
 }
 
 console.log('initial state.screen_size: ' + state.screen_size);
@@ -89,47 +94,110 @@ function addBannerEffects(banners) {
 		var banner 			= positions.banners[index];
 		var containerHeight = banner.node.parentElement.clientHeight;
 		var bannerGone 		= banner.node[screen]+containerHeight;
-		var opacity			= Math.abs( (nodes.scrollY-banner[screen])/500 )
+		var opacity			= Math.abs( (state.scrollY-banner[screen])/1000 )
 
-		if (nodes.scrollY > banner[screen]) {
-			banner.node.classList.add('fixed-top');
-			banner.node.previousElementSibling.classList.add('fixed-top', 'opacity-transition');		
-			banner.node.previousElementSibling.style.opacity = opacity;	
+		if (state.scrollY > banner[screen]) {
+			banner.node.previousElementSibling.style.opacity = opacity;
+			addClasses([
+				[banner.node, 'fixed-top'],
+				[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
+			]);	
 		}
 
-		if (nodes.scrollY > bannerGone || nodes.scrollY < banner[screen] ) {
-			banner.node.classList.remove('fixed-top');
-			banner.node.previousElementSibling.classList.remove('fixed-top');		
+		if (state.scrollY > bannerGone || state.scrollY < banner[screen] ) {
+			removeClasses([
+				[banner.node, 'fixed-top'],
+				[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
+			]);			
 			banner.node.previousElementSibling.style.opacity = 0;	
 		}	
 	});
 }
 
-function addNavEffects(nav) {
-	if (nodes.scrollY > positions.nav_top) {
-	nodes.nav.classList.add('fixed-top');
-	nodes.nav.children[0].classList.add('is-visible');
 
-	} else {
-		nodes.nav.classList.remove('fixed-top');
-		nodes.nav.children[0].classList.remove('is-visible');
+function addClass(el, className) {
+	if (!el.classList.contains(className)) {
+		el.classList.add(className)
+	}
+}
+function removeClass(el, className) {
+	if (el.classList.contains(className)) {
+		el.classList.remove(className)
 	}
 }
 
-window.addEventListener('resize', function() {
-	state.screen_size = document.documentElement.clientWidth;
-	console.log('resized state.screen_size: ' + state.screen_size);
-	updateMobileState();
-})
+function addClasses(args) {
+	args.map(function(key, index) {
+		addClass(key[0], key[1]);
+	})
+}
 
-window.addEventListener('scroll', function() {
+function removeClasses(args) {
+	args.map(function(key, index) {
+		removeClass(key[0], key[1]);
+	})
+}
 
-	/* OPTIMIZE THIS -- CREATE A FIX TO TOP LIB */
-	nodes.scrollY = this.scrollY;
-	console.log('scrollY: ' + nodes.scrollY);
+function isScrollingUp() {
+	return state.previousScrollY > state.scrollY ? true : false
+}
 
-	addNavEffects(nodes.nav);
+function handleUpScroll() {
+	removeClass(nodes.nav, 'slide-out');
+	addClasses([ 
+		[nodes.nav, 'fixed-top'],
+		[nodes.nav.children[0], 'is-visible'],
+	])
+}
 
-	addBannerEffects([nodes.about, nodes.contact]);	
-});
+
+function handleDownScroll() {
+	removeClasses([ 
+		[nodes.nav, 'fixed-top'],
+		[nodes.nav.children[0], 'is-visible'],
+	])
+	addClass(nodes.nav, 'slide-out');
+}
+
+var handlers = {
+	scroll: function() {
+		//console.log(this.scrollY);
+
+		state.previousScrollY = state.scrollY;
+		state.scrollY = this.scrollY || window.pageYOffset || document.documentElement.scrollTop;
+
+		addBannerEffects([nodes.about, nodes.contact]);	
+
+		//if we are past the intro page area
+		if (state.scrollY > positions.banners[0].desktop) {
+			//if upscrolling
+			if (isScrollingUp()) {
+				handleUpScroll();
+			} 
+		
+			else {
+				handleDownScroll();
+			}
+		} 
+		//if we have scrolled up to the intro area
+		else {
+			removeClasses([ 
+				[nodes.nav, 'fixed-top'],
+				[nodes.nav.children[0], 'is-visible'],
+			])
+		}
+		
+	},
+
+	resize: function() {
+		state.screen_size = document.documentElement.clientWidth;
+		console.log('resized state.screen_size: ' + state.screen_size);
+		updateMobileState();
+	}
+}
+
+window.addEventListener('resize', handlers.resize, false);
+
+window.addEventListener('scroll', handlers.scroll, false);
+
 

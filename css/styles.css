@@ -19,6 +19,7 @@ a, a:visited {
 	color:#000;
 	border-bottom:solid #000 3px;
 	padding-bottom:4px;
+	cursor: pointer;
 }
 a:hover {
 	color:#ff0000;
@@ -135,7 +136,9 @@ p {
 	justify-content: center;
     height:50px;
     width:100%;
-    z-index:2;
+    z-index:0;
+    transform: translateY(0);
+   transition: transform 0.25s linear;
 }
 	.main-nav-inner {
 		width:80%;
@@ -143,9 +146,10 @@ p {
 
 	.main-nav.fixed-top {
 		justify-content: space-around;
-		background-color:rgba(0,0,0,0.75);
 	}
-
+	.main-nav.slide-out {
+		transform: translateY(-90%);
+	}			
 
 	.main-nav-item {
 		padding:0 0.5rem;
@@ -188,9 +192,11 @@ p {
 
 #about-banner  {
 	background-image: url(../img/spiral-eye.jpg);
+	background:#ff0000;
 }
 #contact-banner  {
 	background-image: url(../img/spiral-eye.jpg);
+	background:#00ff00;
 }
 
 .fixed-banner {
@@ -215,6 +221,7 @@ p {
 	z-index:3 !important;
 	width:100%;
 	position: absolute;
+	opacity: 0;
 }
 
 
