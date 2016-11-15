@@ -256,6 +256,7 @@ p {
 .grid-item {
 	height:200px;
 	background:url(http://placehold.it/200x200) center center no-repeat;
+	background:#ccc center center no-repeat;
 	background-size:cover;
 	border-radius:2px;
 	flex-basis: 100%;

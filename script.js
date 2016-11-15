@@ -13,7 +13,8 @@ var state = {
 	screen_size: document.documentElement.clientWidth,
 	scrollY: window.scrollY,
 	previousScrollY: 0,
-	is_mobile: false
+	is_mobile: false,
+	screen: 'desktop'
 }
 
 var positions = {
@@ -38,8 +39,13 @@ var observers = {
 		state.is_mobile = utils.isMobile();
 
 		if (state.is_mobile) {
-			grid.removeEventListeners()
-		} else grid.addEventListeners();
+			grid.removeEventListeners();
+			state.screen = 'mobile';
+		} else {
+			grid.addEventListeners();
+			state.screen = 'desktop';
+		}
+
 	},
 }
 
@@ -113,15 +119,14 @@ var grid = (function() {
 
 var effects = {
 	addBannerEffects: function(banners, scrollY) {
-		var screen = state.is_mobile ? 'mobile' : 'desktop';
 
 		banners.map(function(key, index) {
 			var banner 			= positions.banners[index];
 			var containerHeight = banner.node.parentElement.clientHeight;
-			var bannerGone 		= banner.node[screen]+containerHeight;
-			var opacity			= Math.abs( (state.scrollY-banner[screen])/1000 )
+			var bannerGone 		= banner.node[state.screen]+containerHeight;
+			var opacity			= Math.abs( (state.scrollY-banner[state.screen])/1000 )
 
-			if (scrollY > banner[screen]) {
+			if (scrollY > banner[state.screen]) {
 				banner.node.previousElementSibling.style.opacity = opacity;
 				utils.addClasses([
 					[banner.node, 'fixed-top'],
@@ -129,7 +134,7 @@ var effects = {
 				]);	
 			}
 
-			if (scrollY > bannerGone || scrollY < banner[screen] ) {
+			if (scrollY > bannerGone || scrollY < banner[state.screen] ) {
 				utils.removeClasses([
 					[banner.node, 'fixed-top'],
 					[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
@@ -139,7 +144,6 @@ var effects = {
 		});
 	},
 }
- 
 
 var handlers = {
 	upScroll: function() {
