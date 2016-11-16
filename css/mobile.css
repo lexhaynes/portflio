@@ -1,7 +1,7 @@
 /* Smaller Screen */
 @media screen and (max-width: 1024px)  {
 
-	body { border: dotted blue 1px; }
+	body {}
 	html { font-size:20px; }
 
 }
@@ -9,37 +9,114 @@
 /* Mobile */
 @media screen and (max-width: 800px)  {
 
-	body { border: dotted purple 1px; }
+	body {}
 	html { font-size:18px; }
 
-	.content { width:90%; flex-direction:column; }
+	.content { width:90%; flex-direction:column; align-items: center; }
 
+	/* ============ INTRO ============  */
+
+	.intro-title {
+		font-size:2rem;
+	}
+
+	.content.mod-intro {
+    	display: block;
+    	width: 100%;
+    	margin-top: 5rem;
+	}
+
+	.section.mod-intro {
+    	min-height: 0; 
+	}
+
+
+	/* ============ NAV ============  */
+
+	.main-nav {
+		height:40px;
+	}
+
+	/* ============ SECTIONS ============  */
+	
+	
 	.section-title, .section-content {width: 100%; margin:1rem auto;}
 
 	.section-title { text-align:center; }
-	.section-title:before { width:98%;  border-top: solid black 2px; }
+	.section-title:before { width:80%; margin:0 auto; border-top: solid black 4px; }
 	.section-title:after { 
 		content: "";
 	    display: block;
-	    border-bottom: solid black 2px;
-	    width: 98%;
+	    border-bottom: solid black 4px;
+	    width: 80%;
 	    padding-bottom: 1.5rem;
+	    margin:0 auto;
 	}
 
 	.section-content {
 
 	}
 
+	/* ============ GRID ============  */
+
 	.grid-item, .grid-item.bigger { max-width:100%; }
 
-	.main-nav {
-		font-size:1rem;
+	
+	/* ============ CONTACT ============  */
+
+	.section.mod-contact .section-content {
+		display: table;
+    	margin-left:auto;
+    	margin-right:auto;
+    	width: auto;
 	}
 
-	.fixed-banner {
-		height:600px;
+}
+
+/* Very Small Mobile */
+@media screen and (max-width: 600px)  {
+
+	.section {
+		padding:25px 0;
+	}
+
+	.section-title {
+		font-size:1.15rem;
+	}
+
+	.section-content {
+		width:90%;
+		margin:1rem auto;
+	}
+	
+	.mobile-break { display: block }
+
+	/* ============ NAV ============  */
+
+	.main-nav.fixed-styles {
+		flex-direction:column;
+    	justify-content: space-between;
+    	padding: 10px 0;
+    	flex-direction: column;
+    }
+
+	/* ============ ABOUT ============  */
+
+	.section.mod-about {
+    	padding-top: 50px;
+	}
+
+	/* ============ CONTACT ============  */
+
+	.section.mod-contact {
+    	padding-bottom: 50px;
 	}
 
 
+	/* ============ FOOTER ============  */
+
+	.copyright {
+		padding-bottom:10px;
+	}
 
 }

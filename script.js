@@ -4,34 +4,23 @@ var $ = document.querySelectorAll.bind(document);
 var nodes = {
 	grid_items: $('.grid-item'),
 	nav: document.getElementsByClassName('main-nav')[0],
-	about: document.getElementById('about-banner'),
-	contact: document.getElementById('contact-banner')
 }
 
 var state = {
-	mobile_breakpoint: 800,
 	screen_size: document.documentElement.clientWidth,
 	scrollY: window.scrollY,
 	previousScrollY: 0,
 	is_mobile: false,
-	screen: 'desktop'
 }
 
 var positions = {
-	nav_top: 620,
-	banners: [
-		{node: nodes.about, desktop: 660, mobile: 660},
-		{node: nodes.contact, desktop: 2642, mobile: 3636}
-	]
+	nav_top: 555,
 }
 
-var els = {
-	bannerHeight: window.getComputedStyle(document.getElementById('about-banner')).height.replace(/\D/g,'')
+var constants = {
+	mobile_breakpoint: 800,
+	small_mobile_breakpoint: 600
 }
-
-console.log('initial state.screen_size: ' + state.screen_size);
-console.log('mobile breakpoint: ' + state.mobile_breakpoint);
-
 
 
 var observers = {
@@ -40,10 +29,8 @@ var observers = {
 
 		if (state.is_mobile) {
 			grid.removeEventListeners();
-			state.screen = 'mobile';
 		} else {
 			grid.addEventListeners();
-			state.screen = 'desktop';
 		}
 
 	},
@@ -53,7 +40,7 @@ var observers = {
 var utils = (function() {
 	return {
 		isMobile: function() {
-			return state.screen_size > state.mobile_breakpoint ? false : true;
+			return state.screen_size > constants.mobile_breakpoint ? false : true;
 		},
 
 		isScrollingUp: function () {
@@ -92,9 +79,11 @@ var grid = (function() {
 		addEventListeners: function() {
 			Object.keys(nodes.grid_items).map(function(key, index) {
 				nodes.grid_items[key].addEventListener('mouseenter', function() { 
-					console.log('enter ', index);
-					grid.toggleDivAndNearest(this, index), false });	
-				nodes.grid_items[key].addEventListener('mouseleave', function() { grid.toggleDivAndNearest(this, index), false });
+					grid.toggleDivAndNearest(this, index), false 
+				});	
+				nodes.grid_items[key].addEventListener('mouseleave', function() { 
+					grid.toggleDivAndNearest(this, index), false 
+				});
 			});
 		},
 		
@@ -117,79 +106,49 @@ var grid = (function() {
 	}
 })();
 
-var effects = {
-	addBannerEffects: function(banners, scrollY) {
-
-		banners.map(function(key, index) {
-			var banner 			= positions.banners[index];
-			var containerHeight = banner.node.parentElement.clientHeight;
-			var bannerGone 		= banner.node[state.screen]+containerHeight;
-			var opacity			= Math.abs( (state.scrollY-banner[state.screen])/1000 )
-
-			if (scrollY > banner[state.screen]) {
-				banner.node.previousElementSibling.style.opacity = opacity;
-				utils.addClasses([
-					[banner.node, 'fixed-top'],
-					[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
-				]);	
-			}
-
-			if (scrollY > bannerGone || scrollY < banner[state.screen] ) {
-				utils.removeClasses([
-					[banner.node, 'fixed-top'],
-					[banner.node.previousElementSibling, 'fixed-top', 'opacity-transition'],
-				]);			
-				banner.node.previousElementSibling.style.opacity = 0;	
-			}	
-		});
-	},
-}
-
-var handlers = {
-	upScroll: function() {
-		utils.removeClass(nodes.nav, 'slide-out');
-	},	
-
-	downScroll: function() {
-		utils.addClass(nodes.nav, 'slide-out');
-	}
-}
-
 
 var listeners = {
 	scroll: function() {
 		//console.log(this.scrollY);
-
 		state.previousScrollY = state.scrollY;
 		state.scrollY = this.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 
-		effects.addBannerEffects([nodes.about, nodes.contact], state.scrollY);	
-
-		//if we are past the intro page area
-		if (state.scrollY > positions.banners[0].desktop) {
-			//if upscrolling
-			if (utils.isScrollingUp()) {
-				handlers.upScroll();
-			} 
-		
-			else {
-				handlers.downScroll();
-			}
+		//if we are past the intro area
+		if (state.scrollY > positions.nav_top) {
+				utils.addClasses([
+					[nodes.nav, 'fixed-top'],
+					[nodes.nav.children[0], 'is-visible']
+				]);
+				//mobile very small screen
+				if (state.screen_size < constants.small_mobile_breakpoint) {
+					utils.addClass(nodes.nav, 'fixed-styles');
+				} //if bigger mobile screen or desktop
+				else {
+					utils.addClass(nodes.nav, 'space-around');
+				}
 		} 
-		//if we have scrolled up to the intro area
+		//if we have scrolled back up to the intro area
 		else {
-			utils.removeClasses([ 
+			utils.removeClasses([
 				[nodes.nav, 'fixed-top'],
-				[nodes.nav.children[0], 'is-visible'],
-			])
+				[nodes.nav.children[0], 'is-visible']
+			]);
+			//mobile very small screen
+			if (state.screen_size < constants.small_mobile_breakpoint) {
+				utils.removeClass(nodes.nav, 'fixed-styles');
+			} //if bigger mobile screen or desktop
+			else {
+				utils.removeClass(nodes.nav, 'space-around');
+			}			
 		}
-		
 	},
 
 	resize: function() {
 		state.screen_size = document.documentElement.clientWidth;
 		console.log('resized state.screen_size: ' + state.screen_size);
 		observers.updateMobileState();
+		//re-run the scroll handler
+		//listeners.scroll();
 	}
 }
 

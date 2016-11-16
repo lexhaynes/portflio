@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>Alexandra Haynes</title>
+	<title>Alexandra Haynes: Portfolio</title>
 	<meta name="description" content="Alexandra Haynes, Front End Web Developer">
 	<meta name="keywords" content="Front End, Web Developer, Portfolio, frontend, front-end, engineer, software, HTML, CSS, JavaScript">
 	<meta name="author" content="Alexandra Haynes">
@@ -18,16 +18,6 @@
 </head>
 <body>
 
-<nav class="main-nav">
-		<a class = "main-nav-item logo" href = "#"> ALEXANDRA<span class="extra-bold">HAYNES</span> </a>
-	<span>
-		<a class = "main-nav-item" href = "#about"> ABOUT </a>
-	<a class = "main-nav-item"  href = "#work"> WORK </a>
-	<a class = "main-nav-item"  href = "#contact"> CONTACT </a>
-	</span>
-
-</nav>
-
 <section class="section mod-intro">
 	<div class="content mod-intro">
 		<h1 class="intro-title"> 
@@ -37,14 +27,31 @@
 
 		<div class="intro-img"></div>
  	</div>
-  	
+
+
+<nav class="main-nav">
+	<a class = "main-nav-item logo" href = "#"> ALEXANDRA<span class="extra-bold">HAYNES</span> </a>
+	<span>
+	<a class = "main-nav-item" href = "#about"> ABOUT </a>
+	<a class = "main-nav-item"  href = "#work"> WORK </a>
+	<a class = "main-nav-item"  href = "#contact"> CONTACT </a>
+	</span>
+</nav>
+
+
 </section>
 
 
 <section class = "section mod-about" id="about">
 	<div class = "content">
 		<div class="section-title">1. A LITTLE ABOUT ME</div>
-		<div class="section-content"><span class="text-emphasize">Hi, I'm Alex! I'm a front-end web developer.</span> Quaerat consequatur eius dolor porro doloribus facilis at delectus sequi beatae optio repellat ab quidem non veniam autem velit, unde nemo, voluptate.</div>
+		<div class="section-content">
+		<p><span class="text-emphasize">Hi, I'm Alex! I'm a front-end web developer.</span> Quaerat consequatur eius dolor porro doloribus facilis at delectus sequi beatae optio repellat.</p>
+
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit, atque. Doloribus magnam perspiciatis molestiae, pariatur, aliquid officiis, minima debitis recusandae excepturi sed laudantium quod a iusto quaerat deleniti. Perspiciatis, voluptas.</p>
+		<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Velit, atque. Doloribus magnam perspiciatis molestiae, pariatur, aliquid officiis, minima debitis recusandae excepturi sed laudantium quod a iusto quaerat deleniti. Perspiciatis, voluptas.</p>
+
+		</div>
 	</div>
 </section>
 
@@ -53,12 +60,19 @@
 		<div class="section-title">2. THINGS I'VE BUILT LATELY</div>
 		<div class="section-content">
 			<div class="work-grid">
-				<div class="grid-item bigger"><div class="grid-item-content">Peasy App</div></div>
-				<div class="grid-item"><div class="grid-item-content">Login Interaction</div></div>
-				<div class="grid-item"><div class="grid-item-content">Mithril App</div></div>
-				<div class="grid-item bigger"><div class="grid-item-content">Some Interaction</div></div>
-				<div class="grid-item bigger"><div class="grid-item-content">CSS Animation</div></div>
-				<div class="grid-item "><div class="grid-item-content">Some App Component</div></div>				
+				<div class="grid-item bigger">
+					<div class="grid-item-content">Peasy App Prototype</div>
+					<div class="grid-item-tags">
+						<span class = "grid-item-tag">VanillaJS</span>
+						<span class = "grid-item-tag">CSS3</span>
+					</div>
+				</div>
+
+				<div class="grid-item longform"><div class="grid-item-content">Long-Form Article UI</div></div>
+				<div class="grid-item"><div class="grid-item-content">Podcast Player Component</div></div>
+				<div class="grid-item bigger"><div class="grid-item-content">Cinema Club App Filter Component</div></div>
+				<div class="grid-item bigger"><div class="grid-item-content">????</div></div>
+				<div class="grid-item "><div class="grid-item-content">Ask Me Anything App Prototype</div></div>				
 			</div>
 		</div>
 	</div>
@@ -66,12 +80,15 @@
 
 <section class = "section mod-contact" id="contact">
 	<div class="content">
-		<div class="section-title">3. LEARN MORE &amp; GET IN TOUCH</div>
+		<div class="section-title">3. LEARN MORE &amp; <div class="mobile-break"></div> GET IN TOUCH</div>
 		<div class="section-content">
-			<p>See code samples on <a href = "#">Github</a></p>
-			<p>Check out my work history on <a href = "#">LinkedIn</a></p>
-			<p>Download my <a href = "#">résumé</a></p>
-			<p>Or just say hello: <a href = "mailto:#">hello@lexhaynes.com</a></p>
+		<ul>
+			<li>See code samples on <a href = "#">Github</a></li>
+			<li>Check out my work history on <a href = "#">LinkedIn</a></li>
+			<li>Download my <a href = "#">résumé</a></li>
+			<li>Or just say hello: <div class="mobile-break"></div> <a href = "mailto:lex.haynes@gmail.com">lex.haynes [at] gmail [dot] com</a> <!-- <aside>(Please include the name of the excellent hot sauce, 'Tapatio', in the subject line to indicate you are not spam!)</aside> -->
+			</li>
+		</ul>
 		</div>
 	</div>
 </section>
@@ -84,11 +101,11 @@
 		</div>
 
 		<div class="social">
-			<a class = "social-icon" href = "#"><i class = "fa fa-envelope"></i></a>
+			<a class = "social-icon" href = "mailto:lexhaynes@gmail.com"><i class = "fa fa-envelope"></i></a>
 
-			<a class = "social-icon" href = "#"><i class = "fa fa-github"></i></a>
+			<a class = "social-icon" href = "https://github.com/lexhaynes"><i class = "fa fa-github"></i></a>
 
-			<a class = "social-icon" href = "#"><i class = "fa fa-linkedin"></i></a>
+			<a class = "social-icon" href = "https://www.linkedin.com/in/alexandra-haynes-36349184"><i class = "fa fa-linkedin"></i></a>
 		</div>
 
 	</div>
