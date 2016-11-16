@@ -75,16 +75,16 @@ var utils = (function() {
 
 var grid = (function() { 
 	return {
-
 		addEventListeners: function() {
-			Object.keys(nodes.grid_items).map(function(key, index) {
-				nodes.grid_items[key].addEventListener('mouseenter', function() { 
-					grid.toggleDivAndNearest(this, index), false 
+			for (var i = 0; i < nodes.grid_items.length; i++) {
+				var node = nodes.grid_items[i];
+				node.addEventListener('mouseenter', function() { 
+					grid.toggleDivAndNearest(this, i), false 
 				});	
-				nodes.grid_items[key].addEventListener('mouseleave', function() { 
-					grid.toggleDivAndNearest(this, index), false 
+				node.addEventListener('mouseleave', function() { 
+					grid.toggleDivAndNearest(this, i), false 
 				});
-			});
+			}
 		},
 		
 		removeEventListeners: function() {
