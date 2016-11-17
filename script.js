@@ -2,7 +2,6 @@ var $ = document.querySelectorAll.bind(document);
 
 
 var nodes = {
-	grid_items: $('.grid-item'),
 	nav: document.getElementsByClassName('main-nav')[0],
 }
 
@@ -26,12 +25,6 @@ var constants = {
 var observers = {
 	updateMobileState: function() {
 		state.is_mobile = utils.isMobile();
-
-		if (state.is_mobile) {
-			grid.removeEventListeners();
-		} else {
-			grid.addEventListeners();
-		}
 
 	},
 }
@@ -73,38 +66,6 @@ var utils = (function() {
 	}
 })();
 
-var grid = (function() { 
-	return {
-		addEventListeners: function() {
-			for (var i = 0; i < nodes.grid_items.length; i++) {
-				var node = nodes.grid_items[i];
-				node.addEventListener('mouseenter', function() { 
-					grid.toggleDivAndNearest(this, i), false 
-				});	
-				node.addEventListener('mouseleave', function() { 
-					grid.toggleDivAndNearest(this, i), false 
-				});
-			}
-		},
-		
-		removeEventListeners: function() {
-			Object.keys(nodes.grid_items).map(function(key, index) {
-				nodes.grid_items[key].removeEventListener('mouseenter', false);	
-				nodes.grid_items[key].removeEventListener('mouseleave', false);
-			});
-		},
-
-		toggleDivAndNearest: function(div, index) {
-			div.classList.toggle('expanded');
-
-			if (index % 2 ==0 ) {
-				div.nextElementSibling.classList.toggle('contracted');
-			} else {
-				div.previousElementSibling.classList.toggle('contracted');
-			}
-		},
-	}
-})();
 
 
 var listeners = {
