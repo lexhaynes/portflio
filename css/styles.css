@@ -208,6 +208,14 @@ aside { font-style:italic; margin-top:1rem; }
 	font-weight:500;
 	font-size:1rem;
 	transition:background 0.3s;
+	border-bottom:none;
+}
+
+.grid-item:hover,
+.grid-item:active,
+.grid-item:focus {
+	border-bottom:none;
+	color:#fff;
 }
 
 	.grid-item.peasy { background:#FD775B;}
@@ -230,10 +238,11 @@ aside { font-style:italic; margin-top:1rem; }
 	.grid-item.podcast:active,
 	.grid-item.podcast:focus { background:#18b3ac;}	
 
-	.grid-item.docs { background:#666;}
-	.grid-item.docs:hover, 
+	/*free docs site coming soon for now*/
+	.grid-item.docs {cursor:default; background:#ccc;}
+/*	.grid-item.docs:hover, 
 	.grid-item.docs:active,
-	.grid-item.docs:focus { background:#333;}
+	.grid-item.docs:focus { background:#666;}*/
 
 	.grid-item.ama { background:#1a237e;}
 	.grid-item.ama:hover,

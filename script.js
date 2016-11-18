@@ -13,7 +13,7 @@ var state = {
 }
 
 var positions = {
-	nav_top: 555,
+	nav_top: 720,
 }
 
 var constants = {
@@ -70,7 +70,6 @@ var utils = (function() {
 
 var listeners = {
 	scroll: function() {
-		//console.log(this.scrollY);
 		state.previousScrollY = state.scrollY;
 		state.scrollY = this.scrollY || window.pageYOffset || document.documentElement.scrollTop;
 
