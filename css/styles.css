@@ -212,7 +212,8 @@ aside { font-style:italic; margin-top:1rem; }
 
 .grid-item:hover,
 .grid-item:active,
-.grid-item:focus {
+.grid-item:focus,
+.grid-item:visited {
 	border-bottom:none;
 	color:#fff;
 }
