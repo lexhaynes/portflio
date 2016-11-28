@@ -44,7 +44,7 @@ aside { font-style:italic; margin-top:1rem; }
 .section {
 	display: flex;
 	justify-content: center;
-	padding:75px 0;
+	padding:60px 0;
 	position: relative;
 	background: #fff;
 }
@@ -86,7 +86,6 @@ aside { font-style:italic; margin-top:1rem; }
 
 .text-emphasize {
 	font-weight:600;
-	font-size:1.25rem;
 }
 
 .mobile-break { display:none; }
@@ -239,15 +238,20 @@ aside { font-style:italic; margin-top:1rem; }
 	.grid-item.podcast:focus { background:#18b3ac;}	
 
 	/*free docs site coming soon for now*/
-	.grid-item.docs {cursor:default; background:#ccc;}
-/*	.grid-item.docs:hover, 
+	.grid-item.docs {background:#666;}
+	.grid-item.docs:hover, 
 	.grid-item.docs:active,
-	.grid-item.docs:focus { background:#666;}*/
+	.grid-item.docs:focus { background:#333;}
 
 	.grid-item.ama { background:#1a237e;}
 	.grid-item.ama:hover,
 	.grid-item.ama:active,
 	.grid-item.ama:focus {background:#111858;}
+
+	.grid-item.disabled {cursor:default; background:#ccc;}
+	.grid-item.disabled:hover, 
+	.grid-item.disabled:active,
+	.grid-item.disabled:focus { background:#ccc;}
 
 .grid-item-title {
 	padding-left:1rem;
