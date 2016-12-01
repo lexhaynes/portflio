@@ -1,0 +1,15 @@
+.container {
+	display:flex;
+	border: solid red 1px;
+	width:100%;
+}
+
+.section-left {
+	width:20%;
+	padding:0 1rem;
+}
+
+.section-main {
+	background:#ccc;
+	width:80%;
+}
