@@ -233,10 +233,10 @@ aside { font-style:italic; margin-top:1rem; }
 	.grid-item.longform:active
 	.grid-item.longform:focus { background:#2d0e5e;}
 
-	.grid-item.podcast { background: #21dcd4;}
+	.grid-item.podcast { background: #FF6688;}
 	.grid-item.podcast:hover, 
 	.grid-item.podcast:active,
-	.grid-item.podcast:focus { background:#18b3ac;}	
+	.grid-item.podcast:focus { background:#c44b66;}	
 
 	/*free docs site coming soon for now*/
 	.grid-item.docs {background:#666;}
