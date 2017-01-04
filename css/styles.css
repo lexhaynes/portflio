@@ -237,7 +237,12 @@ aside { font-style:italic; margin-top:1rem; }
 	.grid-item.podcast { background: #FF6688;}
 	.grid-item.podcast:hover, 
 	.grid-item.podcast:active,
-	.grid-item.podcast:focus { background:#c44b66;}	
+	.grid-item.podcast:focus { background:#c44b66;}		
+
+	.grid-item.freeyoga { background: #09c5aa;}
+	.grid-item.freeyoga:hover, 
+	.grid-item.freeyoga:active,
+	.grid-item.freeyoga:focus { background:#09b9a0;}	
 
 	/*free docs site coming soon for now*/
 	.grid-item.docs {background:#666;}
