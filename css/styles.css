@@ -95,6 +95,7 @@ aside { font-style:italic; margin-top:1rem; }
 	padding:0;
 	flex-direction:column;
 	justify-content: space-between;
+	margin-top:40px;
 }
 
 .content.mod-intro {
@@ -181,10 +182,6 @@ aside { font-style:italic; margin-top:1rem; }
 
 
 /* ======== about  ======== */
-
-.section.mod-about {
-	padding-top:200px;
-}
 
 
 /* ======== work  ======== */

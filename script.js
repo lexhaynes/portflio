@@ -114,10 +114,10 @@ var listeners = {
 
 //INIT
 
-observers.updateMobileState();
+//observers.updateMobileState();
 
-window.addEventListener('resize', listeners.resize, false);
+//window.addEventListener('resize', listeners.resize, false);
 
-window.addEventListener('scroll', listeners.scroll, false);
+//window.addEventListener('scroll', listeners.scroll, false);
 
 
